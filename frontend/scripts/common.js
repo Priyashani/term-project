@@ -79,3 +79,9 @@ function getRating(stars){
 
   return div;
 }
+searchString = "";
+function searchClick(){
+    searchString = document.getElementById("search-input").value;
+    sessionStorage.setItem("searchString", searchString);
+    window.location.href = 'search.html';
+}
