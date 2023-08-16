@@ -66,8 +66,8 @@ $(document).ready(function () {
       // Loop through each book in JSON data and create a card for it
       $.each(pagedBooks, function (index, book) {
         let bookCard = `
-          <div class="col mb-5">
-          <div class="card h-100">
+          <div class="col">
+          <div class="card h-75">
           <div class="badge bg-danger text-white position-absolute ${book.is_sale ? "" : "d-none"}" style="top: 0.5rem; right: 0.5rem">Sale</div>
           <img class="card-img-top product-div" role="button" src="${book.img_src}" alt="${book.title}" data-id="${book.id}" data-url="product-detail.html?id=${book.id}"/>
           <div class="card-body p-4">

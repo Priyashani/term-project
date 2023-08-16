@@ -32,8 +32,8 @@ $(document).ready(function () {
     // Loop through each book in JSON data and create a card for it
     $.each(books, function (index, book) {
       let bookCard = `
-        <div class="col mb-5">
-          <div class="card h-100">
+        <div class="col">
+          <div class="card h-75">
           <div class="badge bg-danger text-white position-absolute ${book.is_sale ? "" : "d-none"}" style="top: 0.5rem; right: 0.5rem">Sale</div>
           <img class="card-img-top main-product-div" role="button" src="${book.img_src}" alt="${book.title}" data-id="${book.id}" data-url="product-detail.html?id=${book.id}"/>
           <div class="card-body p-4">
@@ -87,12 +87,22 @@ $(document).ready(function () {
       $.each(books, function (index, book) {
         let bookCard = `
           <div class="carousel-item ${index === 0 ? "active" : ""}" data-bs-interval="5000">
-            <img src="${book.img_src}" class="d-block  mx-auto" alt="${book.title}">
-            <div class="carousel-caption d-none d-md-block text-dark">
-              <h5>${book.title}</h5>
-              <p>${book.category}</p>
-            </div>
+            <div class="d-flex justify-content-center align-items-center carousel-content">
+              <div class="container">
+                <div class="row bg-white p-5">
+                  <div class="col-md-6 d-flex align-items-center description-container">
+                    <img src="${book.img_src}" class="d-block mx-auto img-fluid" alt="${book.title}">
+                  </div>
+                  <div class="col-md-6 d-flex align-items-center p-5 description-container">
+                      <div class="text-dark">
+                        <h5>${book.title}</h5>
+                        <p>${book.category}</p>
+                      </div>
+                  </div>
+                </div>
+              </div>
           </div>
+        </div>
         `;
   
         bookList.prepend(bookCard);
