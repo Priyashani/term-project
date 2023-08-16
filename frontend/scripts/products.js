@@ -127,5 +127,50 @@ $(document).ready(function () {
       loadBookGrid();
       renderPagination();
     }
+
+  $('.dropdown-item').click(function(){
+    let sortWith = $(this).attr('name');
+    console.log(sortWith);
+    switch(sortWith){
+      case 'name':
+        allBooks = allBooks.sort((a, b) => {
+          if (a.title < b.title) {
+            return -1;
+          }
+        });
+        break;
+      case 'author':
+        allBooks = allBooks.sort((a, b) => {
+          if (a.author < b.author) {
+            return -1;
+          }
+        });
+        break;
+      case 'ltoh':
+        allBooks = allBooks.sort((a, b) => {
+          if (a.price < b.price) {
+            return -1;
+          }
+        });
+        break;
+      case 'htol':
+        allBooks = allBooks.sort((a, b) => {
+          if (a.price > b.price) {
+            return -1;
+          }
+        });
+        break;
+      default:
+        console.log("");
+    }
+    processBooks(allBooks);
+    loadBookGrid();
+    renderPagination();
+  });
+
+  function sortBooks(){
+
+  }
+
   });
   

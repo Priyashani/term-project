@@ -54,12 +54,24 @@
     <section class="py-5">
         
         <div class="container px-4 px-lg-5 mt-5">
-            <nav aria-label="breadcrumb">
+            <nav aria-label="breadcrumb" class="d-flex justify-content-between">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Products</li>
                 </ol>
+                <div class="btn-group dropdown open">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle='dropdown' aria-haspopup="true" aria-expanded="false">
+                    Sort
+                  </button>
+                  <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item" name="name">Name</a>
+                    <a href="#" class="dropdown-item" name="author">Author</a>
+                    <a href="#" class="dropdown-item" name="ltoh">Price: Low - High</a>
+                    <a href="#" class="dropdown-item" name="htol">Price: High - Low</a>
+                  </div>
+                </div>
               </nav>
+              <div class="blank-space"></div>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="productsGrid">
             </div>
             <nav class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">

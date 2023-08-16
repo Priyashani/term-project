@@ -10832,3 +10832,7 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.blank-space{
+  height: 3em;
+}
