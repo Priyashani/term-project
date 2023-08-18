@@ -1,6 +1,8 @@
 
 $(document).ready(function () {
   var allBooks = [];
+  var unfilterdBooks = [];
+  var allCategories = [];
   var productFilter = {
     pageSize: 8,
     total: 0,
@@ -10,13 +12,26 @@ $(document).ready(function () {
 
   loadBooks('./data/books.json')
   .then(function(booksData) {
+      unfilterdBooks = booksData;
       processBooks(booksData);
+      loadCategories(booksData);
       loadBookGrid();
       renderPagination();
+      renderCategories();
   })
   .catch(function(error) {
       console.error("Error loading books:", error);
   });
+
+  function loadCategories(books){
+    let categories = [];
+    books.forEach(book => {
+      categories = categories.concat(book.category);
+    });
+    //console.log(categories);
+    allCategories = [...new Set(categories)];
+    //console.log(allCategories);
+  }
 
   function loadBooks(url) {
     return $.ajax({
@@ -85,6 +100,25 @@ $(document).ready(function () {
     
   }
 
+    function renderCategories(){
+      let categoryList= $('#categoryList');
+      //categoryList.html('');
+      console.log(allCategories);
+      $.each(allCategories, function(index, category){
+        let item = `<a href="#" class="dropdown-item filter-category" name="${index}">${category}</a>`;
+        categoryList.append(item);
+      });
+      $('#categoryList').on('click', '.filter-category', function(){
+        let index = $(this).attr('name');
+        console.log(index);
+        allBooks = unfilterdBooks;
+        let filteredBooks = allBooks.filter(book => book.category.includes(allCategories[index]));
+        processBooks(filteredBooks);
+        loadBookGrid();
+        renderPagination();
+      });
+    }
+
     function renderPagination() {
       var paginationHTML = `<li class="page-item ${productFilter.page == 1 ? "disabled" : ""}">
                               <a class="page-link back" href="javascript:;" aria-label="Previous">
@@ -128,49 +162,50 @@ $(document).ready(function () {
       renderPagination();
     }
 
-  $('.dropdown-item').click(function(){
-    let sortWith = $(this).attr('name');
-    console.log(sortWith);
-    switch(sortWith){
-      case 'name':
-        allBooks = allBooks.sort((a, b) => {
-          if (a.title < b.title) {
-            return -1;
-          }
-        });
-        break;
-      case 'author':
-        allBooks = allBooks.sort((a, b) => {
-          if (a.author < b.author) {
-            return -1;
-          }
-        });
-        break;
-      case 'ltoh':
-        allBooks = allBooks.sort((a, b) => {
-          if (a.price < b.price) {
-            return -1;
-          }
-        });
-        break;
-      case 'htol':
-        allBooks = allBooks.sort((a, b) => {
-          if (a.price > b.price) {
-            return -1;
-          }
-        });
-        break;
-      default:
-        console.log("");
-    }
-    processBooks(allBooks);
-    loadBookGrid();
-    renderPagination();
-  });
+    $('.sort-item').click(function(){
+      let sortWith = $(this).attr('name');
+      switch(sortWith){
+        case 'name':
+          allBooks = allBooks.sort((a, b) => {
+            if (a.title < b.title) {
+              return -1;
+            }
+          });
+          break;
+        case 'author':
+          allBooks = allBooks.sort((a, b) => {
+            if (a.author < b.author) {
+              return -1;
+            }
+          });
+          break;
+        case 'ltoh':
+          allBooks = allBooks.sort((a, b) => {
+            if (a.price < b.price) {
+              return -1;
+            }
+          });
+          break;
+        case 'htol':
+          allBooks = allBooks.sort((a, b) => {
+            if (a.price > b.price) {
+              return -1;
+            }
+          });
+          break;
+        default:
+          console.log("");
+      }
+      processBooks(allBooks);
+      loadBookGrid();
+      renderPagination();
+    });
 
-  function sortBooks(){
-
-  }
+    $('#remove_filter').click(function(){
+      processBooks(unfilterdBooks);
+      loadBookGrid();
+      renderPagination();
+    })
 
   });
   
